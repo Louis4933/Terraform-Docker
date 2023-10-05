@@ -3,6 +3,7 @@
 ### To deploy the infrastructure, in a terminal :
 
 cd terraform-docker/
+
 ./deploy_infra.sh
 
 ### Application available on internal port 8000
