@@ -1,4 +1,4 @@
-# Spécifiez la version du provider Terraform pour Docker
+# Terraform version for Docker
 terraform {
   required_providers {
     docker = {
@@ -8,23 +8,26 @@ terraform {
   }
 }
 
-# Configurez le provider Docker avec un hôte local
+# Configurate docker provider with a local host
 provider "docker" {
   host = "unix:///var/run/docker.sock"
 }
 
-# Déclarez une ressource docker_image appelée "build" ciblant le dossier contenant le Dockerfile
+# docker_image resource called "build" targeting the Dockerfile
 resource "docker_image" "build" {
-  name          = "docker.io/Terraform-Docker:latest"
-  build_context = "../app"  # Chemin vers le dossier contenant le Dockerfile
+  name          = "docker.io/terraform-docker:latest"
+  build {
+        context = "../app"
+        dockerfile = "Dockerfile"
+  }
 }
 
-# Déclarez une ressource docker_container appelée "container" pour déployer le conteneur à partir de l'image "build"
+# docker_container resource called "container" to deploy the container from the "build" image
 resource "docker_container" "container" {
-  image = docker_image.build.latest  # Utilisez l'image construite précédemment
-  name  = "terraform-docker-container"        # Nom du conteneur
+  image = docker_image.build.name # Use of the image built earlier
+  name  = "terraform-docker-container"
   ports {
-    internal = 8000  # Port interne du conteneur
-    external = 8000  # Port externe sur l'hôte
+    internal = 8000
+    external = 8000
   }
 }
