@@ -22,7 +22,7 @@ resource "docker_image" "build" {
 # Déclarez une ressource docker_container appelée "container" pour déployer le conteneur à partir de l'image "build"
 resource "docker_container" "container" {
   image = docker_image.build.latest  # Utilisez l'image construite précédemment
-  name  = "Terraform-Docker-container"        # Nom du conteneur
+  name  = "terraform-docker-container"        # Nom du conteneur
   ports {
     internal = 8000  # Port interne du conteneur
     external = 8000  # Port externe sur l'hôte
